@@ -1,7 +1,13 @@
 import os
 
 def clear():
-    os.system('echo "this is a windows echo"')
+    if platform.system() == "Windows":
+        os.system("cls")
+    else:
+        os.system("clear")
+
+if __name__ == "__main__":
+    clear()
 
 print("some crazy stuff")
 print("some more crazy stuff")
