@@ -1,7 +1,3 @@
-#this is my test comment to show how github works
-#other comment
-
-
 
 import pygame as pg
 import os
