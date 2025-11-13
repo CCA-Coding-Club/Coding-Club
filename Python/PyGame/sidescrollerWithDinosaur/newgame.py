@@ -19,26 +19,47 @@ def background(x):
         bgX = 800
 
 #player function
-playerX = 400
-playerY = 600
+playerX = 0
+playerY = 180
+CplayerX = 0
+CplayerY = 0
 
-def player(x,y):
-    screen.blit(playerImg, (0,0))
+def player(x, y):
+    screen.blit(playerImg, (x, y))
 
+#keyboard input assignment 
+right = pg.K_RIGHT
+left = pg.K_LEFT
+up = pg.K_UP
+down = pg.K_DOWN
+sbar = pg.K_SPACE
+enter = pg.K_RETURN
 
 #game loop
 game_running = True
 while game_running:
     background(bgX)
-    player(playerX, playerY)
-    #print(bgX)
 
     for event in pg.event.get():
         if event.type == pg.QUIT:
             game_running = False
+        if event.type == pg.KEYDOWN:
+            if event.key == left:
+                CplayerX = -1.1
+            elif event.key == right:
+                CplayerX = 1.1
+        if event.type == pg.KEYUP:
+            if event.key == left or event.key == right:
+                CplayerX = 0
+
     
     
 
-
+    #player position
+    playerX += CplayerX
+    playerY += CplayerY
     #image printing
-    pg.display.update()
+    player(playerX, playerY)
+
+#To do:
+    #make dino images smaller
