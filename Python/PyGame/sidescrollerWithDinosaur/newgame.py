@@ -1,9 +1,9 @@
 import pygame as pg
-
+import newgameClasses as pgC
 pg.init()
 
 screen = pg.display.set_mode((880, 660))
-
+#resources
 backgroundImg = pg.image.load("img/1sky.png")
 #player resources
 idlePlayerImg = pg.image.load("img/player/idleA.png")
@@ -54,7 +54,7 @@ def pimage():
     else:
         return idlePlayerImg
 
-playerX = 780 #450
+playerX = 450
 playerY = 435
 CplayerX = 0
 CplayerY = 0
@@ -70,13 +70,14 @@ def jump():
         isj = True
         CplayerY = -4.0
 
+#boundary checks
 def bYCheck(grassYLower, grassYHigher=5):
     if (playerY > grassYHigher - 80) and (playerY < grassYLower - 80):
         return True
     else:
         return False
 def bXCheck(grassX):
-    if playerX > grassX[0] - 50 and playerX < grassX[1] - 25:
+    if playerX > grassX[0] - 55 and playerX < grassX[1] - 25:
         return True
     else:
         return False
@@ -90,7 +91,7 @@ def ground():
     elif bXCheck(l1grassX) and bYCheck(l1grassY):
         playerG = l1grassY - 80
     elif bXCheck(r1grassX) and bYCheck(r1grassY):
-        PlayerG = r1grassY - 80
+        playerG = r1grassY - 80
     else:
         isj = True
         isi = False
@@ -116,6 +117,7 @@ while game_running:
     grass(m2grassX, m2grassY)
     grass(l1grassX, l1grassY)
     grass(r1grassX, r1grassY)
+    #pgC.Ground().land((200, 350), 300)
 
     #ground
     ground()
@@ -125,9 +127,9 @@ while game_running:
             game_running = False
         if event.type == pg.KEYDOWN:
             if event.key == left:
-                CplayerX = -1.1
+                CplayerX = -1.5
             elif event.key == right:
-                CplayerX = 1.1
+                CplayerX = 1.5
             if event.key == sbar:
                 jump()
         if event.type == pg.KEYUP:
@@ -155,12 +157,12 @@ while game_running:
     #image printing
     player(playerX, playerY)
 
-    if iternum >= 3:
-        print(str(playerY) + "pY")
-        print(str(playerG) + "pG")
-        iternum = 0
-    iternum += 1
-    pg.display.update()
+    #if iternum >= 3:
+    #    print(str(playerY) + "pY")
+    #    print(str(playerG) + "pG")
+    #    iternum = 0
+    #iternum += 1
+    #pg.display.update()
 #To do:
     #make dino images smaller
     #add the ground

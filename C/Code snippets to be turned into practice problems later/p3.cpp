@@ -7,6 +7,7 @@ int main() {
     double mass = 15.2;
     const int W = 1920;
     const int H = 1080;
+    //W = 10;
     //double PI = 4321.23;
     double radius = 10;
     double circumferance = 2 * PI * radius;

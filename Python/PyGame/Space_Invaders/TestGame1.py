@@ -32,16 +32,17 @@ def player(x, y):
     screen.blit(playerImg, (x, y))
 
 #Alien
+aImg1 = pg.image.load('resources/alien.png')
 alienImg = []
 alienX = []
 alienY = []
 alienX_change = []
 alienY_change = []
-q_of_aliens = 8
+q_of_aliens = 2
 #alien_t_switch = 0
 #old variables
 for i in range(q_of_aliens):
-    alienImg.append(pg.image.load('resources/alien.png'))
+    alienImg.append(aImg1)
     alienX.append(random.randint(0, 800))
     alienY.append(random.randint(20, 150))
     alienX_change.append(0.3)
@@ -191,4 +192,3 @@ while running:
     show_score(textX, textY)
 
     pg.display.update()
-    
