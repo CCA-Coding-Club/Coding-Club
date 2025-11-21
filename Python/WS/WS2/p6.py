@@ -14,6 +14,7 @@ greet(7)
 def add(a, b):
     return a + b
 print(add(2,5))
+#output: 7
 greet(add(2,5))
 #p6a4
 def square_num_in_list(x):
@@ -23,3 +24,4 @@ def square_num_in_list(x):
 #call square_num_in_list and print the new list
 squared_list = square_num_in_list([1,2,3,4])
 print(squared_list)
+#output: [1, 4 ,9 , 16]

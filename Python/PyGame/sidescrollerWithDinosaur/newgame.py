@@ -33,15 +33,12 @@ grassmap = (
     [0,1,0,1,0,1,0,1,1,1],
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,1,1,0,0,0,0,1],
+    [1,1,1,1,1,0,1,1,1,1],
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,1,0,0,0,0,0],
+    [1,1,0,0,0,0,0,0,0,0],
+  
    )
 
 grassmaploc = copy.deepcopy(grassmap)
@@ -64,6 +61,7 @@ for seg in range(len(grassmaploc)):
             yPosCount += 1
             gx = 0
             gy += 58
+print(grassmaploc)
     #grassmap logic
 def grassM2():
     for seg in range(len(grassmap)):
@@ -74,6 +72,7 @@ def grassM2():
                 
                 for ix in range(0, 99, 20):
                     screen.blit(grassImg, (grassmaploc[seg][val][0] + ix, grassmaploc[seg][val][1]))
+
 #left-most grass
 l1grassX = (0, 160)
 l1grassY = 560
@@ -127,6 +126,7 @@ def bYCheck(grassYLower, grassYHigher=5):
         return True
     else:
         return False
+
 def bXCheck(grassX):
     if playerX > grassX[0] - 55 and playerX < grassX[1] - 25:
         return True
