@@ -1,9 +1,10 @@
 import pygame as pg
-
+import newgameClasses as pgC
+import copy
 pg.init()
 
 screen = pg.display.set_mode((880, 660))
-
+#resources
 backgroundImg = pg.image.load("img/1sky.png")
 #player resources
 idlePlayerImg = pg.image.load("img/player/idleA.png")
@@ -23,6 +24,56 @@ def background(x):
         bgX = 800
 
 #grass
+    #grassmapvariables
+grassmap = (
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [1,1,0,1,1,1,1,1,1,1],
+    [0,1,1,0,0,0,0,0,0,0],
+    [0,1,0,1,0,1,0,1,1,1],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,1,0,0,0,0,1],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+   )
+
+grassmaploc = copy.deepcopy(grassmap)
+
+
+gx = 0
+gy = 0
+
+xPosCount = 0
+yPosCount = 0 
+
+for seg in range(len(grassmaploc)):
+    for t in range(len(grassmaploc[seg])):
+        xPosCount += 1
+        grassmapgran = (gx, gy)
+        grassmaploc[seg][t] = grassmapgran
+        gx += 94
+        if xPosCount == 10:
+            xPosCount = 0
+            yPosCount += 1
+            gx = 0
+            gy += 58
+    #grassmap logic
+def grassM2():
+    for seg in range(len(grassmap)):
+        for val in range(len(grassmap[seg])):
+        # 
+            if grassmap[seg][val] == 1:
+                #print(grassmaploc[seg][val][0])
+                
+                for ix in range(0, 99, 20):
+                    screen.blit(grassImg, (grassmaploc[seg][val][0] + ix, grassmaploc[seg][val][1]))
 #left-most grass
 l1grassX = (0, 160)
 l1grassY = 560
@@ -54,7 +105,7 @@ def pimage():
     else:
         return idlePlayerImg
 
-playerX = 780 #450
+playerX = 450
 playerY = 435
 CplayerX = 0
 CplayerY = 0
@@ -70,13 +121,14 @@ def jump():
         isj = True
         CplayerY = -4.0
 
+#boundary checks
 def bYCheck(grassYLower, grassYHigher=5):
     if (playerY > grassYHigher - 80) and (playerY < grassYLower - 80):
         return True
     else:
         return False
 def bXCheck(grassX):
-    if playerX > grassX[0] - 50 and playerX < grassX[1] - 25:
+    if playerX > grassX[0] - 55 and playerX < grassX[1] - 25:
         return True
     else:
         return False
@@ -90,7 +142,7 @@ def ground():
     elif bXCheck(l1grassX) and bYCheck(l1grassY):
         playerG = l1grassY - 80
     elif bXCheck(r1grassX) and bYCheck(r1grassY):
-        PlayerG = r1grassY - 80
+        playerG = r1grassY - 80
     else:
         isj = True
         isi = False
@@ -112,10 +164,12 @@ while game_running:
     #backdrop printing
     background(bgX)
     #grass
-    grass(m1grassX, m1grassY)
-    grass(m2grassX, m2grassY)
-    grass(l1grassX, l1grassY)
-    grass(r1grassX, r1grassY)
+    #grass(m1grassX, m1grassY)
+    #grass(m2grassX, m2grassY)
+    #grass(l1grassX, l1grassY)
+    #grass(r1grassX, r1grassY)
+    grassM2()
+    #pgC.Ground().land((200, 350), 300)
 
     #ground
     ground()
@@ -125,21 +179,21 @@ while game_running:
             game_running = False
         if event.type == pg.KEYDOWN:
             if event.key == left:
-                CplayerX = -1.1
+                CplayerX = -1.5
             elif event.key == right:
-                CplayerX = 1.1
+                CplayerX = 1.5
             if event.key == sbar:
                 jump()
         if event.type == pg.KEYUP:
             if event.key == left or event.key == right:
                 CplayerX = 0
-            if event.key == sbar:
-                print()
+            #if event.key == sbar:
 
     
     
 
     #player position
+    
     if playerG > playerY + 5:
         isj = True
     if isj:
@@ -149,17 +203,18 @@ while game_running:
         isj = False
         playerY = playerG - 5
         CplayerY = 0
-
+    
     playerX += CplayerX
     playerY += CplayerY
     #image printing
     player(playerX, playerY)
 
-    if iternum >= 3:
-        print(str(playerY) + "pY")
-        print(str(playerG) + "pG")
-        iternum = 0
-    iternum += 1
+    #if iternum >= 3:
+    #    print(str(playerY) + "pY")
+    #    print(str(playerG) + "pG")
+    #    iternum = 0
+    #iternum += 1
+
     pg.display.update()
 #To do:
     #make dino images smaller

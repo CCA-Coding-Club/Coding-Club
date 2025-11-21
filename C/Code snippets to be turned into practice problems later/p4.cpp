@@ -5,14 +5,17 @@ namespace first {
 }
 namespace second {
     int x = 2;
+
 }
 int main() {
     using namespace first;
-
+   
     /*
         Here are some neat namespaces to consider using consistantly
         using std::cout;
         using std::string;
+        using std::cin;
+        using std::endl;
         etc.
     */
     std::cout << x << "\n";
@@ -22,7 +25,10 @@ int main() {
     //"::" is the scope resolution operator
     std::cout << first::x << "\n" << second::x << "\n";
     std::cout << x << "\n";
-    std::cout << x;
+    std::cout << x << "\n";
+    //cin >> x;
+    //cout << "\n" << x;
+
 
     std::cout << "\n";
     return 0;
