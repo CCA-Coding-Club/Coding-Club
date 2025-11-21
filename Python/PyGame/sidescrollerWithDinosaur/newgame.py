@@ -1,5 +1,6 @@
 import pygame as pg
 import newgameClasses as pgC
+import copy
 pg.init()
 
 screen = pg.display.set_mode((880, 660))
@@ -23,6 +24,56 @@ def background(x):
         bgX = 800
 
 #grass
+    #grassmapvariables
+grassmap = (
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [1,1,0,1,1,1,1,1,1,1],
+    [0,1,1,0,0,0,0,0,0,0],
+    [0,1,0,1,0,1,0,1,1,1],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,1,1,0,0,0,0,1],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+   )
+
+grassmaploc = copy.deepcopy(grassmap)
+
+
+gx = 0
+gy = 0
+
+xPosCount = 0
+yPosCount = 0 
+
+for seg in range(len(grassmaploc)):
+    for t in range(len(grassmaploc[seg])):
+        xPosCount += 1
+        grassmapgran = (gx, gy)
+        grassmaploc[seg][t] = grassmapgran
+        gx += 94
+        if xPosCount == 10:
+            xPosCount = 0
+            yPosCount += 1
+            gx = 0
+            gy += 58
+    #grassmap logic
+def grassM2():
+    for seg in range(len(grassmap)):
+        for val in range(len(grassmap[seg])):
+        # 
+            if grassmap[seg][val] == 1:
+                #print(grassmaploc[seg][val][0])
+                
+                for ix in range(0, 99, 20):
+                    screen.blit(grassImg, (grassmaploc[seg][val][0] + ix, grassmaploc[seg][val][1]))
 #left-most grass
 l1grassX = (0, 160)
 l1grassY = 560
@@ -113,10 +164,11 @@ while game_running:
     #backdrop printing
     background(bgX)
     #grass
-    grass(m1grassX, m1grassY)
-    grass(m2grassX, m2grassY)
-    grass(l1grassX, l1grassY)
-    grass(r1grassX, r1grassY)
+    #grass(m1grassX, m1grassY)
+    #grass(m2grassX, m2grassY)
+    #grass(l1grassX, l1grassY)
+    #grass(r1grassX, r1grassY)
+    grassM2()
     #pgC.Ground().land((200, 350), 300)
 
     #ground
@@ -135,13 +187,13 @@ while game_running:
         if event.type == pg.KEYUP:
             if event.key == left or event.key == right:
                 CplayerX = 0
-            if event.key == sbar:
-                print()
+            #if event.key == sbar:
 
     
     
 
     #player position
+    
     if playerG > playerY + 5:
         isj = True
     if isj:
@@ -151,7 +203,7 @@ while game_running:
         isj = False
         playerY = playerG - 5
         CplayerY = 0
-
+    
     playerX += CplayerX
     playerY += CplayerY
     #image printing
@@ -162,7 +214,8 @@ while game_running:
     #    print(str(playerG) + "pG")
     #    iternum = 0
     #iternum += 1
-    #pg.display.update()
+
+    pg.display.update()
 #To do:
     #make dino images smaller
     #add the ground

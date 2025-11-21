@@ -1,5 +1,5 @@
 import pygame as pg
-import newgame.py as game
+#import newgame as game
 class Ground:
 
     def __init__(self, grass=True):
