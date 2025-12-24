@@ -1,2 +1,1 @@
-
-        isj = False
+T

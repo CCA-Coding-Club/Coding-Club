@@ -34,11 +34,10 @@ grassmap = (
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,1,1,0,0,0,0,1],
     [1,1,1,1,1,0,1,1,1,1],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,1,0,0,0,0,0],
-    [1,1,0,0,0,0,0,0,0,0],
-  
+    [0,0,0,0,0,1,0,0,0,0],
+    [0,0,0,1,1,1,1,0,0,0],
+    [1,0,0,0,0,0,0,0,1,1],
+    [0,0,1,1,1,1,1,1,0,0],
    )
 
 grassmaploc = copy.deepcopy(grassmap)
@@ -61,7 +60,7 @@ for seg in range(len(grassmaploc)):
             yPosCount += 1
             gx = 0
             gy += 58
-print(grassmaploc)
+#print(grassmaploc)
     #grassmap logic
 def grassM2():
     for seg in range(len(grassmap)):
@@ -72,6 +71,8 @@ def grassM2():
                 
                 for ix in range(0, 99, 20):
                     screen.blit(grassImg, (grassmaploc[seg][val][0] + ix, grassmaploc[seg][val][1]))
+
+
 
 #left-most grass
 l1grassX = (0, 160)
@@ -108,7 +109,7 @@ playerX = 450
 playerY = 435
 CplayerX = 0
 CplayerY = 0
-playerG = 440
+playerG = 1050
 
 def player(x, y):
     screen.blit(pimage(), (x, y))
@@ -122,18 +123,43 @@ def jump():
 
 #boundary checks
 def bYCheck(grassYLower, grassYHigher=5):
-    if (playerY > grassYHigher - 80) and (playerY < grassYLower - 80):
+    if (playerY > grassYHigher - 10) and (playerY < grassYLower + 10):
         return True
     else:
         return False
 
 def bXCheck(grassX):
-    if playerX > grassX[0] - 55 and playerX < grassX[1] - 25:
+    if playerX > grassX - 50 and playerX < grassX + 75:
         return True
     else:
         return False
 
-def ground():
+grlpos = 0
+tc1 = False
+tc2 = False
+def gravity(x, y):
+    global playerG, grlpos, playerY, CplayerY, tc1, tc2, isj, isi
+    for seg in range(len(grassmap)):
+        for val in range(len(grassmap[seg])):
+            #print(str(seg) + " " + str(val))
+            if grassmap[seg][val] == 1:
+                grassmaploc[seg][val][0]
+                #tc1, tc2 = bXCheck(grassmaploc[seg][val][0]), bYCheck(grassmaploc[seg][val][1], grassmaploc[seg][val][1])
+                if bXCheck(grassmaploc[seg][val][0]) and (int(playerY) in range(grassmaploc[seg][val][1] - 10, grassmaploc[seg][val][1] + 10)):
+                    grlpos = grassmaploc[seg][val]
+                    playerG = grassmaploc[seg][val][1] - 25
+                elif not bXCheck(grassmaploc[seg][val][0]):
+                    isj = True
+                    CplayerY += 0.1
+                    if int(playerY) in range(grassmaploc[seg][val][1] - 10, grassmaploc[seg][val][1] + 10) and isj and CplayerY > 0.0:
+                        isi = True
+                        isj = False
+                        playerY = playerG
+                        CplayerY = 0
+
+
+#
+"""def ground():
     global playerG, isj, isi
     if bXCheck(m2grassX) and bYCheck(m2grassY):
         playerG = m2grassY - 80
@@ -147,7 +173,7 @@ def ground():
         isj = True
         isi = False
         playerG = 1520
-        
+"""
 #keyboard input assignment 
 right = pg.K_RIGHT
 left = pg.K_LEFT
@@ -157,7 +183,7 @@ sbar = pg.K_SPACE
 enter = pg.K_RETURN
 
 #game loop
-iternum = 0
+iternum = 20
 
 game_running = True
 while game_running:
@@ -172,7 +198,8 @@ while game_running:
     #pgC.Ground().land((200, 350), 300)
 
     #ground
-    ground()
+    #ground()
+    gravity(playerX, playerY)
     #keys
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -194,26 +221,24 @@ while game_running:
 
     #player position
     
-    if playerG > playerY + 5:
-        isj = True
-    if isj:
-        CplayerY += 0.1
-    if playerY >= playerG - 5 and isj and CplayerY > 0.1:
-        isi = True
-        isj = False
-        playerY = playerG - 5
-        CplayerY = 0
+    #if playerG > playerY - 80000:
+    #    isj = True
+    
     
     playerX += CplayerX
     playerY += CplayerY
     #image printing
     player(playerX, playerY)
 
-    #if iternum >= 3:
-    #    print(str(playerY) + "pY")
-    #    print(str(playerG) + "pG")
-    #    iternum = 0
-    #iternum += 1
+    if iternum >= 4:
+        print(str(playerX) + "pX")
+        print(str(playerY) + "pY")
+        print(str(playerG) + "pG")
+        #print(str(grlpos) + "grassPos")
+        print(tc1 == True)
+        print(tc2 == True)
+        iternum = 0
+    iternum += 1
 
     pg.display.update()
 #To do:
