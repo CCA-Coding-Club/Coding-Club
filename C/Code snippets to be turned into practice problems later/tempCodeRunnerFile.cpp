@@ -1,2 +1,2 @@
-    std::cout << "\n";
-  
+
+void chooseWinner(char player, char computer);
