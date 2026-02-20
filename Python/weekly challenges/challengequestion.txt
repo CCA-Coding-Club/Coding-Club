@@ -1,2 +1,8 @@
 Create a stack using a list. Push three numbers, pop one, and print the stack.
-Example: stack = [] stack.append(1) stack.append(2) stack.append(3) stack.pop() print(stack)
+Example: 
+stack = [] 
+stack.append(1) 
+stack.append(2) 
+stack.append(3) 
+stack.pop() 
+print(stack)
